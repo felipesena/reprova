@@ -1,5 +1,8 @@
 # Reprova 2.0
 
+[![codecov](https://codecov.io/gh/UFMG-SQM-2020-2/reprova/branch/master/graph/badge.svg?token=0TSU9TOXIO)](https://codecov.io/gh/UFMG-SQM-2020-2/reprova)
+
+
 **Author**: Marcelo Santos Guimaraes  
 **Email**: marcsgbh@gmail.com
 
