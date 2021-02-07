@@ -6,14 +6,13 @@ import br.ufmg.reuso.marcelosg.reprova.model.Question;
 import br.ufmg.reuso.marcelosg.reprova.model.SemesterGrade;
 import br.ufmg.reuso.marcelosg.reprova.repository.QuestionRepository;
 import br.ufmg.reuso.marcelosg.reprova.utils.StatsCalculator;
-import br.ufmg.reuso.marcelosg.reprova.validators.GradesValidator;
+import br.ufmg.reuso.marcelosg.reprova.utils.StatsCalculatorImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -48,9 +47,8 @@ public class QuestionService {
 
     public Question addGrades(String questionId, SemesterGrade inputGrades) {
 
-        var validationResult = GradesValidator.isValidSemesterGrade(inputGrades);
-        if (validationResult.isPresent()) {
-            throw new ValidationException(validationResult.get());
+        if (inputGrades.getYear() == null || inputGrades.getSemester() == null) {
+            throw new ValidationException(Collections.singletonList("year and semester must be valid."));
         }
 
         var question = questionRepository.findById(questionId).orElseThrow(() -> new ItemNotFoundException(questionId));

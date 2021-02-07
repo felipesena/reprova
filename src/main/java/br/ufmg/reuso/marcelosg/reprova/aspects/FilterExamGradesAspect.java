@@ -15,16 +15,23 @@ import java.util.Collection;
 @Configuration
 public class FilterExamGradesAspect {
 
+
+    private final GradesFilter gradesFilter;
+
+    public FilterExamGradesAspect(GradesFilter gradesFilter) {
+        this.gradesFilter = gradesFilter;
+    }
+
     @AfterReturning(value = "br.ufmg.reuso.marcelosg.reprova.aspects.ExamServicePointcutConfig.returningSingleExam()", returning = "exam")
     public Exam filterExamGrades(JoinPoint joinPoint, Exam exam) {
-        GradesFilter.filterExamGradesFromSameYearAndSemester(exam);
+        gradesFilter.filterExamGradesFromSameYearAndSemester(exam);
         log.debug("Exam grades filtered after method ExamService.{}", joinPoint.getSignature().getName());
         return exam;
     }
 
     @AfterReturning(value = "br.ufmg.reuso.marcelosg.reprova.aspects.ExamServicePointcutConfig.returningMultipleExams()", returning = "exams")
     public Collection<Exam> filterExamGrades(JoinPoint joinPoint, Collection<Exam> exams) {
-        exams.forEach(GradesFilter::filterExamGradesFromSameYearAndSemester);
+        exams.forEach(gradesFilter::filterExamGradesFromSameYearAndSemester);
         log.debug("Exam grades filtered after method ExamService.{}", joinPoint.getSignature().getName());
         return exams;
     }
