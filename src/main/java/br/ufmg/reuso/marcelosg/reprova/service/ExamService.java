@@ -7,8 +7,8 @@ import br.ufmg.reuso.marcelosg.reprova.model.Exam;
 import br.ufmg.reuso.marcelosg.reprova.model.ExamGeneratorCriteria;
 import br.ufmg.reuso.marcelosg.reprova.repository.ExamRepository;
 import br.ufmg.reuso.marcelosg.reprova.utils.StatsCalculator;
+import br.ufmg.reuso.marcelosg.reprova.utils.StatsCalculatorImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +20,16 @@ import java.util.Objects;
 @Service
 public class ExamService {
 
-    @Autowired
-    private ExamRepository examRepository;
+    private final ExamRepository examRepository;
 
-    @Autowired
-    private ExamGeneratorStrategyFactory strategyFactory;
+    private final ExamGeneratorStrategyFactory strategyFactory;
+    private final StatsCalculator statsCalculator;
+
+    public ExamService(ExamRepository examRepository, ExamGeneratorStrategyFactory strategyFactory, StatsCalculator statsCalculator) {
+        this.examRepository = examRepository;
+        this.strategyFactory = strategyFactory;
+        this.statsCalculator = statsCalculator;
+    }
 
     public Exam generateExam(ExamGeneratorCriteria criteria) {
 
@@ -54,11 +59,10 @@ public class ExamService {
 
     public Exam calculateExamGrades(String id) {
         var exam = this.findById(id);
-
-        var studentGrades = StatsCalculator.calculateExamStudentGrades(exam.getQuestions());
+        var studentGrades = statsCalculator.calculateExamStudentGrades(exam.getQuestions());
         exam.setStudentGrades(studentGrades);
 
-        var examStats = StatsCalculator.calculateGradesStatistics(studentGrades);
+        var examStats = statsCalculator.calculateGradesStatistics(studentGrades);
         exam.setStats(examStats);
 
         return examRepository.save(exam);

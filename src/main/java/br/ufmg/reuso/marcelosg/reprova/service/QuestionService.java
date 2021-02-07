@@ -8,7 +8,6 @@ import br.ufmg.reuso.marcelosg.reprova.repository.QuestionRepository;
 import br.ufmg.reuso.marcelosg.reprova.utils.StatsCalculator;
 import br.ufmg.reuso.marcelosg.reprova.utils.StatsCalculatorImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +17,13 @@ import java.util.*;
 @Service
 public class QuestionService {
 
-    @Autowired
-    QuestionRepository questionRepository;
+    private final QuestionRepository questionRepository;
+    private final StatsCalculator statsCalculator;
+
+    public QuestionService(QuestionRepository questionRepository, StatsCalculator statsCalculator) {
+        this.questionRepository = questionRepository;
+        this.statsCalculator = statsCalculator;
+    }
 
     public Question findById(String id) {
         return questionRepository.findById(id).orElseThrow(() -> new ItemNotFoundException(id));
@@ -31,7 +35,7 @@ public class QuestionService {
 
     public Boolean delete(String id) {
         questionRepository.deleteById(id);
-        return Boolean.TRUE;
+        return true;
     }
 
     public Question createQuestion(Question question) {
@@ -53,7 +57,7 @@ public class QuestionService {
 
         var question = questionRepository.findById(questionId).orElseThrow(() -> new ItemNotFoundException(questionId));
 
-        var stats  = StatsCalculator.calculateGradesStatistics(inputGrades.getGrades());
+        var stats = statsCalculator.calculateGradesStatistics(inputGrades.getGrades());
         inputGrades.setStats(stats);
 
         if (question.getSemesterGrades() == null) {
