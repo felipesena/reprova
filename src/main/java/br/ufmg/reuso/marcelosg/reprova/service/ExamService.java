@@ -39,7 +39,7 @@ public class ExamService {
         }
 
         var strategy = strategyFactory.getStrategy(criteria.getStrategyType());
-        var questions = strategy.generateExamQuestions(criteria.getTotalQuestions());
+        var questions = strategy.generateExamQuestions(criteria);
 
         var generatedExam = Exam.builder()
                 .questions(questions)

@@ -17,9 +17,10 @@ public class ExamGeneratorStrategyRegistry {
     }
 
     public ExamGeneratorStrategy getStrategy(String strategyType) {
-        for (ExamGeneratorStrategy s: strategies) {
-            s.hasStrategyType(strategyType);
-            return s;
+        for (ExamGeneratorStrategy s : strategies) {
+            if (s.hasStrategyType(strategyType)) {
+                return s;
+            }
         }
         throw new UnregisteredStrategy(strategyType);
     }

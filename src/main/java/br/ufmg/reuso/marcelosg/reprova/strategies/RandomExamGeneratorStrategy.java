@@ -1,5 +1,6 @@
 package br.ufmg.reuso.marcelosg.reprova.strategies;
 
+import br.ufmg.reuso.marcelosg.reprova.model.ExamGeneratorCriteria;
 import br.ufmg.reuso.marcelosg.reprova.model.Question;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -24,9 +25,9 @@ public class RandomExamGeneratorStrategy implements ExamGeneratorStrategy {
     }
 
     @Override
-    public List<Question> generateExamQuestions(int totalQuestions) {
+    public List<Question> generateExamQuestions(ExamGeneratorCriteria criteria) {
 
-        SampleOperation sampleOperation = Aggregation.sample(totalQuestions);
+        SampleOperation sampleOperation = Aggregation.sample(criteria.getTotalQuestions());
         Aggregation aggregation = Aggregation.newAggregation(sampleOperation);
         AggregationResults<Question> results = mongoTemplate.aggregate(aggregation, "question", Question.class);
 

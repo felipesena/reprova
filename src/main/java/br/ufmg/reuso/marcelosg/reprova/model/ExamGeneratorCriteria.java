@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,4 +16,5 @@ public class ExamGeneratorCriteria {
     private Integer semester;
     private String title;
     private boolean saveExam;
+    private Set<String> tags;
 }
