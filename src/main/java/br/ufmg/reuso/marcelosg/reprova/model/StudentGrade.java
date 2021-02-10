@@ -4,11 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class StudentGrade {
-
+public final class StudentGrade {
     private String student;
     private Double grade;
+    public String getStudent() {
+        return student;
+    }
+    public Double asDouble() {
+        return grade;
+    }
 }

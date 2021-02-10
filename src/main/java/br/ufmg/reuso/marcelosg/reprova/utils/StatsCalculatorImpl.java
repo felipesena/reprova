@@ -18,11 +18,7 @@ public class StatsCalculatorImpl implements StatsCalculator {
 
     @Override
     public Stats calculateGradesStatistics(List<StudentGrade> studentGrades) {
-
-        var grades = studentGrades.stream().mapToDouble(StudentGrade::getGrade).toArray();
-        var descriptiveStatistics = new DescriptiveStatistics(grades);
-
-        return Stats.from_descriptive_statistics(descriptiveStatistics);
+        return Stats.fromStudentGrades(studentGrades);
     }
 
     @Override

@@ -1,15 +1,16 @@
 package br.ufmg.reuso.marcelosg.reprova.model;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collection;
 
 @Builder
-@Data
-public class Stats {
+@Getter
+public final class Stats {
     private Double average;
     private Double median;
     private Double mean;
@@ -17,7 +18,7 @@ public class Stats {
     private Double min;
     private Double max;
 
-    static public Stats from_descriptive_statistics(DescriptiveStatistics target) {
+    static public Stats fromDescriptiveStatistics(DescriptiveStatistics target) {
         return Stats.builder()
                 .median(target.getPercentile(50))
                 .mean(target.getMean())
@@ -25,5 +26,9 @@ public class Stats {
                 .min(target.getMin())
                 .max(target.getMax())
                 .build();
+    }
+
+    static public Stats fromStudentGrades(Collection<StudentGrade> studentGrades) {
+        return fromDescriptiveStatistics(new DescriptiveStatistics(studentGrades.stream().mapToDouble(StudentGrade::asDouble).toArray()));
     }
 }
