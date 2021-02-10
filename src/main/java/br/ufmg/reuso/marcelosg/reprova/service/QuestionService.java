@@ -4,9 +4,8 @@ import br.ufmg.reuso.marcelosg.reprova.exceptions.ItemNotFoundException;
 import br.ufmg.reuso.marcelosg.reprova.exceptions.ValidationException;
 import br.ufmg.reuso.marcelosg.reprova.model.Question;
 import br.ufmg.reuso.marcelosg.reprova.model.SemesterGrade;
+import br.ufmg.reuso.marcelosg.reprova.model.Stats;
 import br.ufmg.reuso.marcelosg.reprova.repository.QuestionRepository;
-import br.ufmg.reuso.marcelosg.reprova.utils.StatsCalculator;
-import br.ufmg.reuso.marcelosg.reprova.utils.StatsCalculatorImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -18,11 +17,9 @@ import java.util.*;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
-    private final StatsCalculator statsCalculator;
 
-    public QuestionService(QuestionRepository questionRepository, StatsCalculator statsCalculator) {
+    public QuestionService(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
-        this.statsCalculator = statsCalculator;
     }
 
     public Question findById(String id) {
@@ -57,7 +54,7 @@ public class QuestionService {
 
         var question = questionRepository.findById(questionId).orElseThrow(() -> new ItemNotFoundException(questionId));
 
-        var stats = statsCalculator.calculateGradesStatistics(inputGrades.getGrades());
+        var stats = Stats.fromStudentGrades(inputGrades.getGrades());
         inputGrades.setStats(stats);
 
         if (question.getSemesterGrades() == null) {

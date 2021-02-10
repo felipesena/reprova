@@ -5,9 +5,8 @@ import br.ufmg.reuso.marcelosg.reprova.exceptions.ValidationException;
 import br.ufmg.reuso.marcelosg.reprova.factories.ExamGeneratorStrategyFactory;
 import br.ufmg.reuso.marcelosg.reprova.model.Exam;
 import br.ufmg.reuso.marcelosg.reprova.model.ExamGeneratorCriteria;
+import br.ufmg.reuso.marcelosg.reprova.model.Stats;
 import br.ufmg.reuso.marcelosg.reprova.repository.ExamRepository;
-import br.ufmg.reuso.marcelosg.reprova.utils.StatsCalculator;
-import br.ufmg.reuso.marcelosg.reprova.utils.StatsCalculatorImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -23,12 +22,10 @@ public class ExamService {
     private final ExamRepository examRepository;
 
     private final ExamGeneratorStrategyFactory strategyFactory;
-    private final StatsCalculator statsCalculator;
 
-    public ExamService(ExamRepository examRepository, ExamGeneratorStrategyFactory strategyFactory, StatsCalculator statsCalculator) {
+    public ExamService(ExamRepository examRepository, ExamGeneratorStrategyFactory strategyFactory) {
         this.examRepository = examRepository;
         this.strategyFactory = strategyFactory;
-        this.statsCalculator = statsCalculator;
     }
 
     public Exam generateExam(ExamGeneratorCriteria criteria) {
@@ -59,10 +56,7 @@ public class ExamService {
 
     public Exam calculateExamGrades(String id) {
         var exam = this.findById(id);
-        var studentGrades = statsCalculator.calculateExamStudentGrades(exam.getQuestions());
-        exam.setStudentGrades(studentGrades);
-
-        var examStats = statsCalculator.calculateGradesStatistics(studentGrades);
+        var examStats = Stats.fromStudentGrades(exam.extractStudentGrades());
         exam.setStats(examStats);
 
         return examRepository.save(exam);
