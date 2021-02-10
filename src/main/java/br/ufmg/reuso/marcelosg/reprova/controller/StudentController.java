@@ -16,8 +16,11 @@ import java.util.Collection;
 @RequestMapping("/students/questions")
 public class StudentController {
 
-    @Autowired
     QuestionService questionService;
+
+    public StudentController(QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @GetMapping("/{id}")
     Question findById(@PathVariable String id) {
