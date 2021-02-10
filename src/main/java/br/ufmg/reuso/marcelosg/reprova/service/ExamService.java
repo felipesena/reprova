@@ -1,19 +1,16 @@
 package br.ufmg.reuso.marcelosg.reprova.service;
 
 import br.ufmg.reuso.marcelosg.reprova.exceptions.ItemNotFoundException;
-import br.ufmg.reuso.marcelosg.reprova.exceptions.ValidationException;
-import br.ufmg.reuso.marcelosg.reprova.strategies.ExamGeneratorStrategyRegistry;
 import br.ufmg.reuso.marcelosg.reprova.model.Exam;
 import br.ufmg.reuso.marcelosg.reprova.model.ExamGeneratorCriteria;
 import br.ufmg.reuso.marcelosg.reprova.model.Stats;
 import br.ufmg.reuso.marcelosg.reprova.repository.ExamRepository;
+import br.ufmg.reuso.marcelosg.reprova.strategies.ExamGeneratorStrategyRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Objects;
 
 @Slf4j
 @Service
