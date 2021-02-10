@@ -21,24 +21,15 @@ public class ExamService {
 
     private final ExamRepository examRepository;
 
-    private final ExamGeneratorStrategyRegistry strategyFactory;
+    private final ExamGeneratorStrategyRegistry strategyRegistry;
 
-    public ExamService(ExamRepository examRepository, ExamGeneratorStrategyRegistry strategyFactory) {
+    public ExamService(ExamRepository examRepository, ExamGeneratorStrategyRegistry strategyRegistry) {
         this.examRepository = examRepository;
-        this.strategyFactory = strategyFactory;
+        this.strategyRegistry = strategyRegistry;
     }
 
     public Exam generateExam(ExamGeneratorCriteria criteria) {
-
-        if (Objects.isNull(criteria) || Objects.isNull(criteria.getStrategyType())) {
-            throw new ValidationException(Collections.singletonList("An exam generator strategyType must be defined."));
-        }
-
-        if (Objects.isNull(criteria.getTotalQuestions())) {
-            throw new ValidationException(Collections.singletonList("totalQuestions number must be provided."));
-        }
-
-        var strategy = strategyFactory.getStrategy(criteria.getStrategyType());
+        var strategy = strategyRegistry.getStrategy(criteria.getStrategyType());
         var questions = strategy.generateExamQuestions(criteria);
 
         var generatedExam = Exam.builder()

@@ -6,6 +6,7 @@ import br.ufmg.reuso.marcelosg.reprova.model.Question;
 import br.ufmg.reuso.marcelosg.reprova.model.SemesterGrade;
 import br.ufmg.reuso.marcelosg.reprova.model.Stats;
 import br.ufmg.reuso.marcelosg.reprova.repository.QuestionRepository;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -42,19 +43,13 @@ public class QuestionService {
         return question;
     }
 
-    public Question addGrades(String questionId, SemesterGrade inputGrades) {
-
-        if (inputGrades.getYear() == null || inputGrades.getSemester() == null) {
-            throw new ValidationException(Collections.singletonList("year and semester must be valid."));
-        }
-
+    public Question addGrades(@NonNull String questionId, @NonNull SemesterGrade inputGrades) {
         var question = questionRepository.findById(questionId).orElseThrow(() -> new ItemNotFoundException(questionId));
 
         var stats = Stats.fromStudentGrades(inputGrades.getGrades());
         inputGrades.setStats(stats);
 
         var existingGradeIndex = question.getSemesterGrades().indexOf(inputGrades);
-
         if (existingGradeIndex >= 0) {
             question.getSemesterGrades().set(existingGradeIndex, inputGrades);
             log.info("Updated existing semester grade year={} semester={} on question={}", inputGrades.getYear(), inputGrades.getSemester(), questionId);
