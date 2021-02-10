@@ -2,7 +2,7 @@ package br.ufmg.reuso.marcelosg.reprova.service;
 
 import br.ufmg.reuso.marcelosg.reprova.exceptions.ItemNotFoundException;
 import br.ufmg.reuso.marcelosg.reprova.exceptions.ValidationException;
-import br.ufmg.reuso.marcelosg.reprova.factories.ExamGeneratorStrategyFactory;
+import br.ufmg.reuso.marcelosg.reprova.strategies.ExamGeneratorStrategyRegistry;
 import br.ufmg.reuso.marcelosg.reprova.model.Exam;
 import br.ufmg.reuso.marcelosg.reprova.model.ExamGeneratorCriteria;
 import br.ufmg.reuso.marcelosg.reprova.model.Stats;
@@ -21,9 +21,9 @@ public class ExamService {
 
     private final ExamRepository examRepository;
 
-    private final ExamGeneratorStrategyFactory strategyFactory;
+    private final ExamGeneratorStrategyRegistry strategyFactory;
 
-    public ExamService(ExamRepository examRepository, ExamGeneratorStrategyFactory strategyFactory) {
+    public ExamService(ExamRepository examRepository, ExamGeneratorStrategyRegistry strategyFactory) {
         this.examRepository = examRepository;
         this.strategyFactory = strategyFactory;
     }
@@ -38,7 +38,7 @@ public class ExamService {
             throw new ValidationException(Collections.singletonList("totalQuestions number must be provided."));
         }
 
-        var strategy = strategyFactory.createStrategy(criteria.getStrategyType());
+        var strategy = strategyFactory.getStrategy(criteria.getStrategyType());
         var questions = strategy.generateExamQuestions(criteria.getTotalQuestions());
 
         var generatedExam = Exam.builder()

@@ -5,15 +5,22 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.SampleOperation;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class RandomExamGeneratorStrategy implements ExamGeneratorStrategy {
 
     private MongoTemplate mongoTemplate;
 
     public RandomExamGeneratorStrategy(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
+    }
+
+    @Override
+    public boolean hasStrategyType(String strategyType) {
+        return strategyType.equalsIgnoreCase("random");
     }
 
     @Override
