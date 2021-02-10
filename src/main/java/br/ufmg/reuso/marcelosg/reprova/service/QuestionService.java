@@ -36,10 +36,6 @@ public class QuestionService {
     }
 
     public Question createQuestion(Question question) {
-
-        if (question.getSemesterGrades() == null) {
-            question.setSemesterGrades(new ArrayList<>());
-        }
         questionRepository.save(question);
 
         log.info("Question saved. statement=\"{}\" id={}", question.getStatement(), question.getId());
@@ -56,10 +52,6 @@ public class QuestionService {
 
         var stats = Stats.fromStudentGrades(inputGrades.getGrades());
         inputGrades.setStats(stats);
-
-        if (question.getSemesterGrades() == null) {
-            question.setSemesterGrades(new ArrayList<>());
-        }
 
         var existingGradeIndex = question.getSemesterGrades().indexOf(inputGrades);
 
