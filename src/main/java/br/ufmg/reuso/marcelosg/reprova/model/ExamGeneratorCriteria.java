@@ -1,18 +1,25 @@
 package br.ufmg.reuso.marcelosg.reprova.model;
 
-import br.ufmg.reuso.marcelosg.reprova.strategies.StrategyType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.lang.Nullable;
 
-@Data
-@NoArgsConstructor
+import java.util.Set;
+
+@Getter
 @AllArgsConstructor
 public class ExamGeneratorCriteria {
+    @NonNull
     private Integer totalQuestions;
-    private StrategyType strategyType;
+    @NonNull
+    private String strategyType;
+    @NonNull
     private Integer year;
+    @NonNull
     private Integer semester;
+    @NonNull
     private String title;
+    @NonNull
     private boolean saveExam;
+    @Nullable
+    private Set<String> tags;
 }

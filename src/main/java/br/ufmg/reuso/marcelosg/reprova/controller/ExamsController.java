@@ -15,8 +15,11 @@ import java.util.Collection;
 @RequestMapping("/exams")
 public class ExamsController {
 
-    @Autowired
     private ExamService examService;
+
+    public ExamsController(ExamService examService) {
+        this.examService = examService;
+    }
 
     @TrackExecutionTime
     @PostMapping("/generator")

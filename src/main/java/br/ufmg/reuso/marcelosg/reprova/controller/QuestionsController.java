@@ -3,7 +3,6 @@ package br.ufmg.reuso.marcelosg.reprova.controller;
 import br.ufmg.reuso.marcelosg.reprova.model.Question;
 import br.ufmg.reuso.marcelosg.reprova.model.SemesterGrade;
 import br.ufmg.reuso.marcelosg.reprova.service.QuestionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +15,11 @@ import java.util.Collection;
 @RequestMapping("/questions")
 public class QuestionsController {
 
-    @Autowired
-    QuestionService questionService;
+    private final QuestionService questionService;
+
+    public QuestionsController(QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @GetMapping("/{id}")
     Question findById(@PathVariable String id) {

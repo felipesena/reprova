@@ -1,20 +1,30 @@
 package br.ufmg.reuso.marcelosg.reprova.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.lang.Nullable;
 
 import java.util.List;
 import java.util.Objects;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Builder
+@AllArgsConstructor
 public class SemesterGrade {
 
+    @NonNull
     private Integer year;
+    @NonNull
     private Integer semester;
+    @NonNull
     private String discipline;
+    @Nullable
     private Stats stats;
+    @NonNull
     private List<StudentGrade> grades;
+
+    public void setStats(Stats stats) {
+        this.stats = stats;
+    }
 
     @Override
     public boolean equals(Object o) {

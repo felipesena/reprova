@@ -1,43 +1,33 @@
 package br.ufmg.reuso.marcelosg.reprova.service;
 
 import br.ufmg.reuso.marcelosg.reprova.exceptions.ItemNotFoundException;
-import br.ufmg.reuso.marcelosg.reprova.exceptions.ValidationException;
-import br.ufmg.reuso.marcelosg.reprova.factories.ExamGeneratorStrategyFactory;
 import br.ufmg.reuso.marcelosg.reprova.model.Exam;
 import br.ufmg.reuso.marcelosg.reprova.model.ExamGeneratorCriteria;
+import br.ufmg.reuso.marcelosg.reprova.model.Stats;
 import br.ufmg.reuso.marcelosg.reprova.repository.ExamRepository;
-import br.ufmg.reuso.marcelosg.reprova.utils.StatsCalculator;
+import br.ufmg.reuso.marcelosg.reprova.strategies.ExamGeneratorStrategyRegistry;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Objects;
 
 @Slf4j
 @Service
 public class ExamService {
 
-    @Autowired
-    private ExamRepository examRepository;
+    private final ExamRepository examRepository;
 
-    @Autowired
-    private ExamGeneratorStrategyFactory strategyFactory;
+    private final ExamGeneratorStrategyRegistry strategyRegistry;
+
+    public ExamService(ExamRepository examRepository, ExamGeneratorStrategyRegistry strategyRegistry) {
+        this.examRepository = examRepository;
+        this.strategyRegistry = strategyRegistry;
+    }
 
     public Exam generateExam(ExamGeneratorCriteria criteria) {
-
-        if (Objects.isNull(criteria) || Objects.isNull(criteria.getStrategyType())) {
-            throw new ValidationException(Collections.singletonList("An exam generator strategyType must be defined."));
-        }
-
-        if (Objects.isNull(criteria.getTotalQuestions())) {
-            throw new ValidationException(Collections.singletonList("totalQuestions number must be provided."));
-        }
-
-        var strategy = strategyFactory.createStrategy(criteria.getStrategyType());
-        var questions = strategy.generateExamQuestions(criteria.getTotalQuestions());
+        var strategy = strategyRegistry.getStrategy(criteria.getStrategyType());
+        var questions = strategy.generateExamQuestions(criteria);
 
         var generatedExam = Exam.builder()
                 .questions(questions)
@@ -54,11 +44,7 @@ public class ExamService {
 
     public Exam calculateExamGrades(String id) {
         var exam = this.findById(id);
-
-        var studentGrades = StatsCalculator.calculateExamStudentGrades(exam.getQuestions());
-        exam.setStudentGrades(studentGrades);
-
-        var examStats = StatsCalculator.calculateGradesStatistics(studentGrades);
+        var examStats = Stats.fromStudentGrades(exam.extractStudentGrades());
         exam.setStats(examStats);
 
         return examRepository.save(exam);
