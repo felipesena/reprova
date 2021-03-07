@@ -1,7 +1,6 @@
 package br.ufmg.reuso.marcelosg.reprova.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.data.annotation.Id;

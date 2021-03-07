@@ -1,10 +1,8 @@
 package br.ufmg.reuso.marcelosg.reprova.strategies;
 
 import br.ufmg.reuso.marcelosg.reprova.exceptions.UnregisteredStrategy;
-import br.ufmg.reuso.marcelosg.reprova.strategies.ExamGeneratorStrategy;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component

@@ -4,7 +4,6 @@ import br.ufmg.reuso.marcelosg.reprova.aspects.TrackExecutionTime;
 import br.ufmg.reuso.marcelosg.reprova.model.Exam;
 import br.ufmg.reuso.marcelosg.reprova.model.ExamGeneratorCriteria;
 import br.ufmg.reuso.marcelosg.reprova.service.ExamService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
