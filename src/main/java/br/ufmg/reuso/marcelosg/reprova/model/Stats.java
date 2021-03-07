@@ -11,7 +11,6 @@ import java.util.Collection;
 @Builder
 @Getter
 public final class Stats {
-    private Double average;
     private Double median;
     private Double mean;
     private Double standardDeviation;
