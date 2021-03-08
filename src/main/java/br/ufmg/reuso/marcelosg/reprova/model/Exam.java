@@ -31,8 +31,6 @@ public class Exam {
 
     @Nullable
     private Stats stats;
-    @Nullable
-    private List<StudentGrade> studentGrades;
 
     @Nullable
     private LocalDateTime applicationDate;
@@ -51,8 +49,6 @@ public class Exam {
             var studentGrade = v.stream().reduce(0.0, Double::sum);
             studentGradesList.add(new StudentGrade(k, studentGrade));
         });
-
-        this.studentGrades = studentGradesList;
 
         return studentGradesList;
     }
