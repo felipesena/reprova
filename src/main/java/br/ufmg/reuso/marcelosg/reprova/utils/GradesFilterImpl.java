@@ -4,6 +4,8 @@ import br.ufmg.reuso.marcelosg.reprova.model.Exam;
 import br.ufmg.reuso.marcelosg.reprova.model.Question;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 @Component
 public class GradesFilterImpl implements GradesFilter {
 
@@ -14,6 +16,9 @@ public class GradesFilterImpl implements GradesFilter {
     }
 
     private void filterQuestionGrades(Integer year, Integer semester, Question question) {
+        if (question.getSemesterGrades() == null) {
+            question.setSemesterGrades(new ArrayList<>());
+        }
         question.getSemesterGrades().removeIf(grade -> !grade.getYear().equals(year) || !grade.getSemester().equals(semester));
     }
 }
