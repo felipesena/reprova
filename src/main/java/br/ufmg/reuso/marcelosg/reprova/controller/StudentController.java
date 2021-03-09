@@ -22,12 +22,12 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    Question findById(@PathVariable String id) {
+    public Question findById(@PathVariable String id) {
         return questionService.findById(id);
     }
 
     @GetMapping
-    Collection<Question> find() {
+    public Collection<Question> find() {
         return questionService.find();
     }
 }

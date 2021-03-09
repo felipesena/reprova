@@ -22,37 +22,37 @@ public class ExamsController {
 
     @TrackExecutionTime
     @PostMapping("/generator")
-    ResponseEntity<Exam> generateExam(@RequestBody ExamGeneratorCriteria criteria) {
+    public ResponseEntity<Exam> generateExam(@RequestBody ExamGeneratorCriteria criteria) {
         return ResponseEntity.status(HttpStatus.CREATED).body(examService.generateExam(criteria));
     }
 
     @TrackExecutionTime
     @PostMapping
-    ResponseEntity<Exam> create(@RequestBody Exam exam) {
+    public ResponseEntity<Exam> create(@RequestBody Exam exam) {
         return ResponseEntity.status(HttpStatus.CREATED).body(examService.createExam(exam));
     }
 
     @TrackExecutionTime
     @GetMapping("/{id}")
-    ResponseEntity<Exam> findById(@PathVariable("id") String id) {
+    public ResponseEntity<Exam> findById(@PathVariable("id") String id) {
         return ResponseEntity.status(HttpStatus.OK).body(examService.findById(id));
     }
 
     @TrackExecutionTime
     @GetMapping
-    ResponseEntity<Collection<Exam>> findExams() {
+    public ResponseEntity<Collection<Exam>> findExams() {
         return ResponseEntity.ok(examService.find());
     }
 
     @TrackExecutionTime
     @PutMapping("/{id}/grades")
-    ResponseEntity<Exam> calculateExamGrades(@PathVariable("id") String id) {
+    public ResponseEntity<Exam> calculateExamGrades(@PathVariable("id") String id) {
         return ResponseEntity.ok(examService.calculateExamGrades(id));
     }
 
     @TrackExecutionTime
     @DeleteMapping("/{id}")
-    ResponseEntity<Exam> deleteById(@PathVariable("id") String id) {
+    public ResponseEntity<Exam> deleteById(@PathVariable("id") String id) {
         examService.deleteById(id);
         return ResponseEntity.ok().build();
     }

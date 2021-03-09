@@ -22,34 +22,34 @@ public class QuestionsController {
     }
 
     @GetMapping("/{id}")
-    Question findById(@PathVariable String id) {
+    public Question findById(@PathVariable String id) {
         return questionService.findById(id);
     }
 
     @GetMapping
-    Collection<Question> find() {
+    public Collection<Question> find() {
         return questionService.find();
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<Question> deleteById(@PathVariable String id) {
+    public ResponseEntity<Question> deleteById(@PathVariable String id) {
         questionService.delete(id);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping
-    ResponseEntity<Question> create(@RequestBody Question inputQuestion) {
+    public ResponseEntity<Question> create(@RequestBody Question inputQuestion) {
         var question = questionService.createQuestion(inputQuestion);
         return ResponseEntity.status(HttpStatus.CREATED).body(question);
     }
 
     @PutMapping("/{id}")
-    Question update(@RequestBody Question question, @PathVariable Integer id) {
+    public Question update(@RequestBody Question question, @PathVariable Integer id) {
         return question;
     }
 
     @PutMapping("/{id}/grades")
-    Question addGrades(@RequestBody SemesterGrade inputGrades, @PathVariable String id) {
+    public Question addGrades(@RequestBody SemesterGrade inputGrades, @PathVariable String id) {
         return questionService.addGrades(id, inputGrades);
     }
 
