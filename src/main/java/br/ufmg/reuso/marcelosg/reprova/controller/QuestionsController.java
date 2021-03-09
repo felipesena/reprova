@@ -32,7 +32,7 @@ public class QuestionsController {
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity deleteById(@PathVariable String id) {
+    ResponseEntity<Question> deleteById(@PathVariable String id) {
         questionService.delete(id);
         return ResponseEntity.ok().build();
     }

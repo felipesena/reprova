@@ -52,7 +52,7 @@ public class ExamsController {
 
     @TrackExecutionTime
     @DeleteMapping("/{id}")
-    ResponseEntity deleteById(@PathVariable("id") String id) {
+    ResponseEntity<Exam> deleteById(@PathVariable("id") String id) {
         examService.deleteById(id);
         return ResponseEntity.ok().build();
     }
