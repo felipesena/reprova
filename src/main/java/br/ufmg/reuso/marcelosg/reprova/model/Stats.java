@@ -21,7 +21,7 @@ public final class Stats {
         return Stats.builder()
                 .median(target.getPercentile(50))
                 .mean(target.getMean())
-                .standardDeviation(new BigDecimal(target.getStandardDeviation()).setScale(2, RoundingMode.HALF_UP).doubleValue())
+                .standardDeviation(BigDecimal.valueOf(target.getStandardDeviation()).setScale(2, RoundingMode.HALF_UP).doubleValue())
                 .min(target.getMin())
                 .max(target.getMax())
                 .build();

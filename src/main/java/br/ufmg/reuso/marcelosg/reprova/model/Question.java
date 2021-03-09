@@ -57,4 +57,8 @@ public class Question {
 
     @Nullable
     List<SemesterGrade> semesterGrades;
+
+    public void setSemesterGrades(@Nullable List<SemesterGrade> semesterGrades) {
+        this.semesterGrades = semesterGrades;
+    }
 }
