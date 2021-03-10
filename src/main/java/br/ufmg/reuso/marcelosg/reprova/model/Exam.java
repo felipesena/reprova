@@ -31,8 +31,6 @@ public class Exam {
 
     @Nullable
     private Stats stats;
-    @Nullable
-    private List<StudentGrade> studentGrades;
 
     @Nullable
     private LocalDateTime applicationDate;
@@ -46,15 +44,13 @@ public class Exam {
         Map<String, List<Double>> examGradesByStudent = getQuestions().stream().flatMap(q -> q.getSemesterGrades().get(0) // Why should I get only the first semester grade?
                 .getGrades().stream()).collect(Collectors.groupingBy(StudentGrade::getStudent, Collectors.mapping(StudentGrade::asDouble, Collectors.toList())));
 
-        List<StudentGrade> studentGrades = new ArrayList<>();
+        List<StudentGrade> studentGradesList = new ArrayList<>();
         examGradesByStudent.forEach((k, v) -> {
             var studentGrade = v.stream().reduce(0.0, Double::sum);
-            studentGrades.add(new StudentGrade(k, studentGrade));
+            studentGradesList.add(new StudentGrade(k, studentGrade));
         });
 
-        this.studentGrades = studentGrades;
-
-        return studentGrades;
+        return studentGradesList;
     }
 
     public void setStats(Stats stats) {

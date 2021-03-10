@@ -1,7 +1,6 @@
 package br.ufmg.reuso.marcelosg.reprova.service;
 
 import br.ufmg.reuso.marcelosg.reprova.exceptions.ItemNotFoundException;
-import br.ufmg.reuso.marcelosg.reprova.exceptions.ValidationException;
 import br.ufmg.reuso.marcelosg.reprova.model.Question;
 import br.ufmg.reuso.marcelosg.reprova.model.SemesterGrade;
 import br.ufmg.reuso.marcelosg.reprova.model.Stats;
@@ -48,6 +47,10 @@ public class QuestionService {
 
         var stats = Stats.fromStudentGrades(inputGrades.getGrades());
         inputGrades.setStats(stats);
+
+        if (question.getSemesterGrades() == null) {
+            question.setSemesterGrades(new ArrayList<>());
+        }
 
         var existingGradeIndex = question.getSemesterGrades().indexOf(inputGrades);
         if (existingGradeIndex >= 0) {

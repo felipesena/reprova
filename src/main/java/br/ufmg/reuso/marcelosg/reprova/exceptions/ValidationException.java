@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class ValidationException extends RuntimeException {
 
-    private ErrorResponse error;
+    private final transient ErrorResponse error;
 
     public ValidationException(List<String> error) {
         this.error = new ErrorResponse(error);
