@@ -8,6 +8,7 @@ import org.springframework.lang.Nullable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,17 +40,24 @@ public class Exam {
     @DBRef
     private List<Question> questions;
 
+    // t1  testExtractStudentGrades_whenStudentDoesntHaveGetSemesterGrades
+    // t2   testExtractStudentGrades_thenSuccess
     public List<StudentGrade> extractStudentGrades() {
 
-        Map<String, List<Double>> examGradesByStudent = getQuestions().stream().flatMap(q -> q.getSemesterGrades().get(0) // Why should I get only the first semester grade?
-                .getGrades().stream()).collect(Collectors.groupingBy(StudentGrade::getStudent, Collectors.mapping(StudentGrade::asDouble, Collectors.toList())));
+        Map<String, List<Double>> examGradesByStudent = getQuestions().stream().flatMap(q -> {
+            assert q.getSemesterGrades() != null;
+            if(!q.getSemesterGrades().isEmpty()) {
+                return  q.getSemesterGrades().get(0) // Why should I get only the first semester grade?
+                        .getGrades().stream();
+            }
+            return new ArrayList<StudentGrade>().stream();
+        }).collect(Collectors.groupingBy(StudentGrade::getStudent, Collectors.mapping(StudentGrade::asDouble, Collectors.toList())));
 
         List<StudentGrade> studentGradesList = new ArrayList<>();
         examGradesByStudent.forEach((k, v) -> {
             var studentGrade = v.stream().reduce(0.0, Double::sum);
             studentGradesList.add(new StudentGrade(k, studentGrade));
         });
-
         return studentGradesList;
     }
 
