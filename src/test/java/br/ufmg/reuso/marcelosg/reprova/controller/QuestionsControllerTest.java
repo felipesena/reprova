@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import lombok.var;
+
 import org.json.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -73,7 +75,8 @@ class QuestionsControllerTest {
         
         
         JSONObject jsonObject = new JSONObject(response.getResponse().getContentAsString());
-        var result = this.mockMvc.perform(get("/questions/" + jsonObject.getString("id"))).andExpect(status().is2xxSuccessful()).andReturn();
+        var result = this.mockMvc.perform(get("/questions/" + jsonObject.getString("id")))
+            .andExpect(status().is2xxSuccessful()).andReturn();
         assertEquals(200, result.getResponse().getStatus());
     }
     
@@ -83,7 +86,6 @@ class QuestionsControllerTest {
         this.mockMvc.perform(post("/questions")
         .contentType(MediaType.APPLICATION_JSON)
         .content(json)).andExpect(status().is2xxSuccessful());
-        
         
         var result = this.mockMvc.perform(get("/questions/-1")).andReturn();
         assertEquals(404, result.getResponse().getStatus());

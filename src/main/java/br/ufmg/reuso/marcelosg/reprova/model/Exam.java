@@ -41,10 +41,19 @@ public class Exam {
 
     public List<StudentGrade> extractStudentGrades() {
 
-        Map<String, List<Double>> examGradesByStudent = getQuestions().stream().flatMap(q -> q.getSemesterGrades().get(0) // Why should I get only the first semester grade?
-                .getGrades().stream()).collect(Collectors.groupingBy(StudentGrade::getStudent, Collectors.mapping(StudentGrade::asDouble, Collectors.toList())));
+        Map<String, List<Double>> examGradesByStudent = 
+            getQuestions()
+            .stream()
+            .flatMap(q -> q.getSemesterGrades()
+            .get(0)
+            .getGrades()
+            .stream())
+        .collect(Collectors.groupingBy(
+            StudentGrade::getStudent, 
+            Collectors.mapping(StudentGrade::asDouble, Collectors.toList())));
 
         List<StudentGrade> studentGradesList = new ArrayList<>();
+
         examGradesByStudent.forEach((k, v) -> {
             var studentGrade = v.stream().reduce(0.0, Double::sum);
             studentGradesList.add(new StudentGrade(k, studentGrade));

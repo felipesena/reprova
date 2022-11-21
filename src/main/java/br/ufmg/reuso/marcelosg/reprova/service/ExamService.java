@@ -6,6 +6,7 @@ import br.ufmg.reuso.marcelosg.reprova.model.ExamGeneratorCriteria;
 import br.ufmg.reuso.marcelosg.reprova.model.Stats;
 import br.ufmg.reuso.marcelosg.reprova.repository.ExamRepository;
 import br.ufmg.reuso.marcelosg.reprova.strategies.ExamGeneratorStrategyRegistry;
+import lombok.var;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

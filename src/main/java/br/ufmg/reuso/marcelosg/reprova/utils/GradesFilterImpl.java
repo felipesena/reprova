@@ -19,6 +19,8 @@ public class GradesFilterImpl implements GradesFilter {
         if (question.getSemesterGrades() == null) {
             question.setSemesterGrades(new ArrayList<>());
         }
-        question.getSemesterGrades().removeIf(grade -> !grade.getYear().equals(year) || !grade.getSemester().equals(semester));
+
+        question.getSemesterGrades().removeIf(
+            grade -> !grade.getYear().equals(year) || !grade.getSemester().equals(semester));
     }
 }
