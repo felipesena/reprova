@@ -1,8 +1,12 @@
 package br.ufmg.reuso.marcelosg.reprova.unit.ExamServiceTests;
 
 import br.ufmg.reuso.marcelosg.reprova.exceptions.ItemNotFoundException;
-import br.ufmg.reuso.marcelosg.reprova.exceptions.StatsException;
-import br.ufmg.reuso.marcelosg.reprova.model.*;
+import br.ufmg.reuso.marcelosg.reprova.model.Exam;
+import br.ufmg.reuso.marcelosg.reprova.model.Question;
+import br.ufmg.reuso.marcelosg.reprova.model.QuestionDifficulty;
+import br.ufmg.reuso.marcelosg.reprova.model.SemesterGrade;
+import br.ufmg.reuso.marcelosg.reprova.model.Stats;
+import br.ufmg.reuso.marcelosg.reprova.model.StudentGrade;
 import br.ufmg.reuso.marcelosg.reprova.repository.ExamRepository;
 import br.ufmg.reuso.marcelosg.reprova.service.ExamService;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
@@ -22,7 +26,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ExamServiceTest {
+class ExamServiceTest {
 
 
     @InjectMocks
@@ -33,14 +37,14 @@ public class ExamServiceTest {
 
 
     @Test
-    public void testCalculateExamGrades_whenIdIsNull_thenItemNotFoundException() {
+    void testCalculateExamGrades_whenIdIsNull_thenItemNotFoundException() {
         Assertions.assertThrows(ItemNotFoundException.class, () ->
                 examService.calculateExamGrades(null));
 
     }
 
     @Test
-    public void testCalculateExamGrades_thenStatsException() {
+    void testCalculateExamGrades_thenStatsException() {
         List<SemesterGrade> semesterGrades = new ArrayList<>();
         semesterGrades.add(buildSemesterGrade());
         when(examRepository.findById(anyString())).thenReturn(Optional.of(buildExam("Fooo", semesterGrades)));

@@ -1,13 +1,9 @@
 package br.ufmg.reuso.marcelosg.reprova.unit.ExamServiceTests;
 
 import br.ufmg.reuso.marcelosg.reprova.model.Exam;
-import br.ufmg.reuso.marcelosg.reprova.model.ExamGeneratorCriteria;
-import br.ufmg.reuso.marcelosg.reprova.model.Question;
 import br.ufmg.reuso.marcelosg.reprova.model.Stats;
 import br.ufmg.reuso.marcelosg.reprova.repository.ExamRepository;
 import br.ufmg.reuso.marcelosg.reprova.service.ExamService;
-import br.ufmg.reuso.marcelosg.reprova.strategies.ExamGeneratorStrategyRegistry;
-import br.ufmg.reuso.marcelosg.reprova.strategies.RandomExamGeneratorStrategy;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CalculateExamGradesTest {
+class CalculateExamGradesTest {
 
     @InjectMocks
     ExamService examService;
@@ -32,14 +28,14 @@ public class CalculateExamGradesTest {
     ExamRepository examRepository;
 
     @Test
-    public void calculateExamGrades_whenExamIsNull_shouldThrowException() {
+    void calculateExamGrades_whenExamIsNull_shouldThrowException() {
         when(examRepository.findById(any())).thenReturn(null);
 
         assertThrows(Exception.class, () -> examService.calculateExamGrades("1"));
     }
 
     @Test
-    public void calculateExamGrades_whenExamHasNoQuestions_shouldThrowParseException() {
+    void calculateExamGrades_whenExamHasNoQuestions_shouldThrowParseException() {
         when(examRepository.findById(any())).thenReturn(Optional.of(getSampleExam()));
 
         assertThrows(Exception.class, () -> examService.calculateExamGrades("1"));

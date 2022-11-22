@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GenerateExamTest {
+class GenerateExamTest {
 
     @InjectMocks
     ExamService examService;
@@ -31,7 +31,7 @@ public class GenerateExamTest {
     RandomExamGeneratorStrategy randomExamGeneratorStrategy;
 
     @Test
-    public void generateExam_whenCriteriaIsValid_shouldBeSuccessful() {
+    void generateExam_whenCriteriaIsValid_shouldBeSuccessful() {
         // arrange
         var criteria = new ExamGeneratorCriteria(10, "Test",
                 2022, 2, "This is a test", false, null);

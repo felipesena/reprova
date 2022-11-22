@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ExamTest {
+class ExamTest {
 
 
     @Test
-    public void testExtractStudentGrades_whenStudentDoesntHaveGetSemesterGrades() {
+    void testExtractStudentGrades_whenStudentDoesntHaveGetSemesterGrades() {
         List<SemesterGrade> semesterGrades = new ArrayList<>();
         Exam exam =  buildExam("Foo ", semesterGrades);
         Assertions.assertTrue( exam.extractStudentGrades().isEmpty());
 
     }
     @Test
-    public void testExtractStudentGrades_withThenSucces() {
+    void testExtractStudentGrades_withThenSucces() {
         List<SemesterGrade> semesterGrades = new ArrayList<>();
         semesterGrades.add(buildSemesterGrade());
         Exam exam =  buildExam("Foo ", semesterGrades);

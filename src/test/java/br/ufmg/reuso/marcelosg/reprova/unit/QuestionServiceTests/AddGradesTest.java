@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class AddGradesTest {
+class AddGradesTest {
 
     @Mock
     QuestionRepository questionRepository;
@@ -28,9 +28,9 @@ public class AddGradesTest {
     QuestionService questionService;
 
     @Test
-    public void addGrades_whenQuestionIsNotFound_shouldThrowException() {
+    void addGrades_whenQuestionIsNotFound_shouldThrowException() {
         // arrange
-        when(questionRepository.findById(anyString())).thenReturn(Optional.ofNullable(null));
+        when(questionRepository.findById(anyString())).thenReturn(Optional.empty());
 
         assertThrows(ItemNotFoundException.class, () -> questionService.addGrades("1", getSampleGrade()));
     }
