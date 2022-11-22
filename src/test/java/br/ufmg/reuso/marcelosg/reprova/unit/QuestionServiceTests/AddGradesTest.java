@@ -32,7 +32,8 @@ class AddGradesTest {
         // arrange
         when(questionRepository.findById(anyString())).thenReturn(Optional.empty());
 
-        assertThrows(ItemNotFoundException.class, () -> questionService.addGrades("1", getSampleGrade()));
+        var sampleGrade = getSampleGrade();
+        assertThrows(ItemNotFoundException.class, () -> questionService.addGrades("1", sampleGrade));
     }
 
     private SemesterGrade getSampleGrade() {
