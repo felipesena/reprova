@@ -44,7 +44,7 @@ public class ExamServiceTest {
         List<SemesterGrade> semesterGrades = new ArrayList<>();
         semesterGrades.add(buildSemesterGrade());
         when(examRepository.findById(anyString())).thenReturn(Optional.of(buildExam("Fooo", semesterGrades)));
-        Assertions.assertThrows(StatsException.class, () ->
+        Assertions.assertThrows(NumberFormatException.class, () ->
                 examService.calculateExamGrades("BCADFADFERER"));
 
     }

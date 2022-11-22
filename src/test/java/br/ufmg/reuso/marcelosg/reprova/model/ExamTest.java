@@ -13,7 +13,8 @@ public class ExamTest {
 
     @Test
     public void testExtractStudentGrades_whenStudentDoesntHaveGetSemesterGrades() {
-        Exam exam =  buildExam("Foo ", null);
+        List<SemesterGrade> semesterGrades = new ArrayList<>();
+        Exam exam =  buildExam("Foo ", semesterGrades);
         Assertions.assertTrue( exam.extractStudentGrades().isEmpty());
 
     }

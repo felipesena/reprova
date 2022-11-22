@@ -13,7 +13,7 @@ public class StatsTest {
     public void testFromStudentGrades_givenAStatsFail() {
         Collection<StudentGrade> studentGrades =  new ArrayList<>();
         studentGrades.add(new StudentGrade("Foo", 1D ));
-        Assertions.assertThrows(StatsException.class, () ->
+        Assertions.assertThrows(NumberFormatException.class, () ->
                 Stats.fromStudentGrades(studentGrades));
     }
 }
