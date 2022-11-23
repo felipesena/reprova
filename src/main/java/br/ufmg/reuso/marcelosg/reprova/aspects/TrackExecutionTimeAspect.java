@@ -23,8 +23,12 @@ public class TrackExecutionTimeAspect {
 
         var end = Instant.now();
         var executionTime = Duration.between(start, end).toMillis();
-        log.info("{}.{} executed in {} milliseconds.", proceedingJoinPoint.getSignature().getDeclaringTypeName(), proceedingJoinPoint.getSignature().getName(),
-                executionTime);
+
+        log.info(
+            "{}.{} executed in {} milliseconds.", 
+            proceedingJoinPoint.getSignature().getDeclaringTypeName(), 
+            proceedingJoinPoint.getSignature().getName(),
+            executionTime);
 
         return returnObject;
     }
