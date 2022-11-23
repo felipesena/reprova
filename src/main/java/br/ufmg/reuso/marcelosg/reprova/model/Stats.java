@@ -2,7 +2,6 @@ package br.ufmg.reuso.marcelosg.reprova.model;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.var;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 

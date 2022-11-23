@@ -6,7 +6,6 @@ import br.ufmg.reuso.marcelosg.reprova.model.SemesterGrade;
 import br.ufmg.reuso.marcelosg.reprova.model.Stats;
 import br.ufmg.reuso.marcelosg.reprova.repository.QuestionRepository;
 import lombok.NonNull;
-import lombok.var;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
