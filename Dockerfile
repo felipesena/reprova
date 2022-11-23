@@ -1,4 +1,4 @@
-FROM openjdk:11-jre-slim
+FROM azul/zulu-openjdk:11-latest
 
 COPY ./target/*.jar ./reprova.jar
 
