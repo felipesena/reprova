@@ -52,14 +52,25 @@ public class QuestionService {
             question.setSemesterGrades(new ArrayList<>());
         }
 
-        var existingGradeIndex = question.getSemesterGrades().indexOf(inputGrades);
+        int existingGradeIndex = question.getSemesterGrades().indexOf(inputGrades);
+
         if (existingGradeIndex >= 0) {
             question.getSemesterGrades().set(existingGradeIndex, inputGrades);
-            log.info("Updated existing semester grade year={} semester={} on question={}", inputGrades.getYear(), inputGrades.getSemester(), questionId);
+
+            log.info(
+                "Updated existing semester grade year={} semester={} on question={}", 
+                inputGrades.getYear(), 
+                inputGrades.getSemester(), 
+                questionId);
 
         } else {
             question.getSemesterGrades().add(inputGrades);
-            log.info("Semester Grade for year={} semester={} added to question={}", inputGrades.getYear(), inputGrades.getSemester(), questionId);
+
+            log.info(
+                "Semester Grade for year={} semester={} added to question={}", 
+                inputGrades.getYear(), 
+                inputGrades.getSemester(), 
+                questionId);
         }
 
         questionRepository.save(question);
