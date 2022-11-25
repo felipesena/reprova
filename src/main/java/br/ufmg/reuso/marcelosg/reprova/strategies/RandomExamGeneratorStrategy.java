@@ -28,7 +28,9 @@ public class RandomExamGeneratorStrategy implements ExamGeneratorStrategy {
     public List<Question> generateExamQuestions(ExamGeneratorCriteria criteria) {
 
         SampleOperation sampleOperation = Aggregation.sample(criteria.getTotalQuestions());
+
         Aggregation aggregation = Aggregation.newAggregation(sampleOperation);
+
         AggregationResults<Question> results = mongoTemplate.aggregate(aggregation, "question", Question.class);
 
         return results.getMappedResults();

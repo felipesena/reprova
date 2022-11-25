@@ -31,7 +31,9 @@ public class TagsExamGeneratorStrategy implements ExamGeneratorStrategy {
 
         SampleOperation sampleOperation = Aggregation.sample(criteria.getTotalQuestions());
         MatchOperation filterOperation = Aggregation.match(Criteria.where("tags").in(criteria.getTags()));
-        Aggregation aggregation = Aggregation.newAggregation(filterOperation,sampleOperation);
+
+        Aggregation aggregation = Aggregation.newAggregation(filterOperation, sampleOperation);
+
         AggregationResults<Question> results = mongoTemplate.aggregate(aggregation, "question", Question.class);
 
         return results.getMappedResults();
